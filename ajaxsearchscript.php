@@ -1,7 +1,10 @@
 <?php
 // This is the search section
 
+// Create object for handling search results
 $xmlDoc=new DOMDocument();
+
+// Populate object with details from search data file
 $xmlDoc->load("searchlinks.xml");
 
 $x=$xmlDoc->getElementsByTagName('link');
