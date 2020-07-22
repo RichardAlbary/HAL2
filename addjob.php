@@ -19,7 +19,7 @@ $VATStatus = $_POST['VATStatus'];
 $VATExemptionReason = $_POST['VATExemptionReason'];
 $clientNumber = $_POST['clientNumber'];
 
-// Create an object for the record we are going to update.
+// Create an object for the record we are going to create.
 $object = new stdClass();
 
 // Bind variable of POST data to object.
