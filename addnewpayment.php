@@ -1,5 +1,5 @@
 <?php
-
+// Load necessary libraries
 define('_JEXEC', 1);
 define('JPATH_BASE', __DIR__);  
 require_once JPATH_BASE . '/includes/defines.php';
@@ -14,15 +14,18 @@ $mainframe = JFactory::getApplication('site');
     ini_set('display_errors', '1');
     ini_set('error_reporting', E_ALL);
 
+// Initiate variables, assign values from POST data
 $invoiceNumber = $_POST['InvoiceNumber'];
 $clientNumber = $_POST['ClientNumber'];
 $value = $_POST['Value'];
 $date = $_POST['Date'];
 $payeename = $_POST['PayeeName'];
 $jobnumber = $_POST['JobNumber'];
-// Create an object for the record we are going to update.
+
+// Create an object for the record we are going to create.
 $object = new stdClass();
 
+// Bind variable of POST data to object.
 $object->InvoiceNumber = $invoiceNumber;
 $object->ClientNumber = $clientNumber;
 $object->Value = $value;
@@ -30,11 +33,11 @@ $object->Date = $date;
 $object->PayeeName = $payeename;
 $object->JobNumber = $jobnumber;
 
-// Update their details in the users table using id as the primary key.
+// Insert payment data into payments table.
 $result = JFactory::getDbo()->insertObject('o7ot5_payments', $object, 'PaymentNumber');
 
 
-// Update the client details with the payee name, if it isn't already included
+// Update the client details with the payee name, if they have paid under a new name
 // Get a db connection
 $db = JFactory::getDBO();
 
@@ -70,7 +73,7 @@ if (strpos($clientname, $payeename) === false) {
     }
 }
 
-// Update their details in the users table using id as the primary key.
+// Update their details in the client table using id as the primary key.
 $result = JFactory::getDbo()->updateObject('o7ot5_client', $clientResult, 'ClientNumber');
 
 
@@ -98,11 +101,11 @@ $invoiceAmountReceived = $invoiceResult->AmountReceived;
 $invoiceAmountReceived = bcadd($invoiceAmountReceived, $value, 2);
 $invoiceResult->AmountReceived = $invoiceAmountReceived;
 
-// Update their details in the users table using id as the primary key.
+// Update invoice details in the invoices table using id as the primary key.
 $result = JFactory::getDbo()->updateObject('o7ot5_invoices', $invoiceResult, 'InvoiceNumber');
 
 
-// Get the invoice details, which will now include the amount received.
+// Get the invoice details, which will now include the amount received. Allow for all 3 totals, as well as possible discount.
 // $invoiceAmountReceived already set
 $invoiceGoodsTotal = $invoiceResult->GoodsTotal;
 $invoiceVATTotal = $invoiceResult->VATTotal;
@@ -194,7 +197,7 @@ else {
 
 }
 
-
+// Redirect user to invoicing page for the job
 header('Location: /jobs/invoicing?'.$jobnumber);
 
 ?>
