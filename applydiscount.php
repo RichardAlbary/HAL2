@@ -1,5 +1,5 @@
 <?php
-
+// Load necessary libraries
 define('_JEXEC', 1);
 define('JPATH_BASE', __DIR__);  
 require_once JPATH_BASE . '/includes/defines.php';
@@ -14,6 +14,7 @@ $mainframe = JFactory::getApplication('site');
     ini_set('display_errors', '1');
     ini_set('error_reporting', E_ALL);
 
+// Initiate variables, assign values from POST data
 $invoiceNumber = $_POST['DiscountInvoiceNumber'];
 $clientNumber = $_POST['DiscountClientNumber'];
 $discountAmount = bcadd($_POST['DiscountAmount'], 0, 2);
@@ -170,7 +171,7 @@ else {
 
 }
 
-
+// Redirect user to updated page
 header('Location: /jobs/invoicing?'.$jobnumber);
 
 ?>
