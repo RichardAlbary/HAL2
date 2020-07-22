@@ -25,7 +25,7 @@ $phoneNumber2 = $_POST['phoneNumber2'];
 $otherPayee1 = $_POST['otherPayee1'];
 $otherPayee2 = $_POST['otherPayee2'];
 
-// Create an object for the record to be updated.
+// Create an object for the record to be create.
 $object = new stdClass();
 
 // Bind variable of POST data to object.
